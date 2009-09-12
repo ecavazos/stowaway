@@ -23,7 +23,7 @@ class ImageFinder
       if File.directory?(File.join(dir.path, f))  
         find File.join(dir.path, f), images
       elsif image?(f)
-        images << File.join(dir.path, f) if image?(f)
+        images << File.join(dir.path, f)
       end
     end
     images
@@ -33,3 +33,7 @@ end
 
 finder = ImageFinder.new
 p finder.find '/Users/Emilio/Code/sinatra/iamneato.com/'
+
+# 1. look for images in files
+# 2. store images that are not found
+# 3. output results
