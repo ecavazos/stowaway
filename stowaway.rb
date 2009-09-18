@@ -20,19 +20,15 @@ class NotFoundTracker
     @ignore = ["^\\.", ".ico", ".png", ".gif", ".jpg"]
   end
   
-  def not_found?(file)
+  def inspect_file(file)
     File.open(file, 'r') do |i|
       while line = i.gets
-        @files_to_find.each do |x| 
-          if line.include?(x) 
-            @files_to_find.delete(x)
-          end
-        end
+        @files_to_find.each { |x| @files_to_find.delete(x) if line.include?(x) }
       end
     end
   end
   
-  def scan(path, not_found = [])
+  def scan(path)
     dir = Dir.new(path)
     
     dir.each do |f|
@@ -41,9 +37,9 @@ class NotFoundTracker
       path_to_file = File.join(dir.path, f)
       
       if File.directory?(path_to_file)
-        scan path_to_file, not_found
+        scan(path_to_file)
       else
-        not_found?(path_to_file)
+        inspect_file(path_to_file)
       end
     end
     @files_to_find
