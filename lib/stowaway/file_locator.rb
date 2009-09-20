@@ -1,4 +1,5 @@
 require_relative 'fshelpyhelp'
+require_relative 'file'
 
 module Stowaway
   class FileLocator
@@ -28,7 +29,7 @@ module Stowaway
         if File.directory?(file) 
           find_all file, files
         elsif type?(f)
-          files << file
+          files << FileObj.new(file)
         end
       end
       files

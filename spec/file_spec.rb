@@ -1,10 +1,14 @@
 require_relative 'spec_helper'
-require_relative '../lib/stowaway/afile'
+require_relative '../lib/stowaway/file'
 
-describe "AFile" do
+describe Stowaway::FileObj do
   
   before(:all) do
-    @file = Stowaway::AFile.new('/fake/path/test.rb')
+    @file = Stowaway::FileObj.new('/fake/path/test.rb')
+  end
+  
+  it "should return full path" do
+    @file.fullpath.should == '/fake/path/test.rb'
   end
   
   it "should return name of file" do

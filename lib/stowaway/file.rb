@@ -1,5 +1,7 @@
 module Stowaway
-  class AFile
+  class FileObj
+    attr :fullpath
+    
     def initialize(fullpath)
       @fullpath = fullpath
     end
@@ -12,7 +14,4 @@ module Stowaway
       File.split(@fullpath)[0]
     end
   end
-  
-  # f = AFile.new('/Users/Emilio/Code/sinatra/iamneato.com/iamneato.rb')
-  #   p f.path
 end

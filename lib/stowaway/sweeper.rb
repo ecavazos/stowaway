@@ -12,7 +12,7 @@ module Stowaway
     def inspect_file(file)
       File.open(file, 'r') do |i|
         while line = i.gets
-          @files_to_find.each { |x| @files_to_find.delete(x) if line.include?(x) }
+          @files_to_find.each { |x| @files_to_find.delete(x) if line.include?(x.name) }
         end
       end
     end

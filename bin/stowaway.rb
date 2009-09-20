@@ -13,7 +13,7 @@ if not_found.length > 0
   p "You have #{not_found.length} stowaway(s)"
   p "----------------------------"
   p ""
-  not_found.each { |f| p "file: #{f}"  }
+  not_found.each { |f| p "file: #{f.fullpath}"  }
 else
   p 'all images appear to be in use.'
 end
