@@ -3,18 +3,22 @@ require_relative 'fshelpyhelp'
 module Stowaway
   class Sweeper
     include FSHelpyHelp
-  
-    def initialize(files_to_find)
+
+    def initialize(files_to_find, ext_to_ignore = nil)
       @files_to_find = files_to_find
-      @ignore = ["^\\.", ".png", ".gif", ".jpg"]
+      @ignore = ext_to_ignore || ["^\\.", ".png", ".gif", ".jpg"]
     end
   
     def inspect_file(file)
       File.open(file, 'r') do |i|
         while line = i.gets
-          @files_to_find.each { |x| @files_to_find.delete(x) if line.include?(x.name) }
+          remove_matches(line)
         end
       end
+    end
+
+    def remove_matches(line)
+      @files_to_find.delete_if { |file| line.include?(file.name) }
     end
   
     def sweep(path)

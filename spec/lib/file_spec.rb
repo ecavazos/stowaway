@@ -1,5 +1,5 @@
-require_relative 'spec_helper'
-require_relative '../lib/stowaway/file'
+require 'spec/spec_helper'
+require 'lib/stowaway/file'
 
 describe Stowaway::FileObj do
   

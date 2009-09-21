@@ -1,0 +1,4 @@
+this is a line of test text.
+this line has the name of a file: file1.jpg.
+this line also has the name of a file (file2.gif) and it is so awesome.
+the end.
