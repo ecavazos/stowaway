@@ -1,13 +1,14 @@
-require '../lib/stowaway/file_locator'
+require '../lib/stowaway/locator'
 require '../lib/stowaway/sweeper'
 
-path = '/Users/Emilio/Code/sinatra/iamneato.com/'
+dir_to_search = '/Users/Emilio/Code/sinatra/iamneato.com/'
 types = %w{.jpg .gif .png .ico .js .css}
-locator = Stowaway::FileLocator.new(types)
-images = locator.find_all path
+
+locator = Stowaway::Locator.new(types)
+images = locator.find_all dir_to_search
 
 fs = Stowaway::Sweeper.new images
-not_found = fs.sweep(path)
+not_found = fs.sweep dir_to_search
 
 if not_found.length > 0
   p "You have #{not_found.length} stowaway(s)"

@@ -13,5 +13,9 @@ module Stowaway
     def path
       File.split(@fullpath)[0]
     end
+    
+    def ==(fileObj)
+      self.fullpath == fileObj.fullpath
+    end
   end
 end

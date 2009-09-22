@@ -2,7 +2,7 @@ require_relative 'fshelpyhelp'
 require_relative 'file'
 
 module Stowaway
-  class FileLocator
+  class Locator
     include FSHelpyHelp
   
     def initialize(extensions)

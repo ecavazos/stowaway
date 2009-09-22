@@ -18,4 +18,12 @@ describe Stowaway::FileObj do
   it "should return path to file" do
     @file.path.should == '/fake/path'
   end
+  
+  it "should be == if paths are the same" do
+    @file.should == Stowaway::FileObj.new('/fake/path/test.rb')
+  end
+  
+  it "should not be == if paths are differet" do
+    @file.should_not == Stowaway::FileObj.new('/blah/test.rb')
+  end
 end
