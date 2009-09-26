@@ -15,7 +15,7 @@ module Stowaway
     private
     def parse(argv) 
       OptionParser.new do |opts| 
-        opts.banner = "Usage: anagram [ options ] word..." 
+        opts.banner = "Usage: stowaway [ options ] path/to/site" 
         
         opts.on("-t", "--types <TYPES>", String, "File types to search for (ex: .jpg .gif)") do |ext| 
           @file_types = ext.split(' ')

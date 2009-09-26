@@ -1,5 +1,5 @@
 #! /usr/local/bin/ruby 
 
-require 'lib/runner' 
+require 'lib/stowaway/runner' 
 runner = Stowaway::Runner.new(ARGV) 
 runner.run 
