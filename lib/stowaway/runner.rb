@@ -20,12 +20,12 @@ module Stowaway
     private
     def respond(not_found)
       if not_found.empty?
-        printf "Zero stowaways found. You run a tight ship.\n\n"
+        print "Zero stowaways found. You run a tight ship.\n\n"
       else
-        printf "\nYou have #{not_found.length} stowaway(s)\n"
-        printf "--------------------------\n\n"
-        not_found.each_with_index { |f, i| printf "#{i+1}: #{f.fullpath}\n" }
-        printf "\n"
+        print "\nYou have #{not_found.length} stowaway(s)\n"
+        print "--------------------------\n\n"
+        not_found.each_with_index { |f, i| print "#{i+1}: #{f.fullpath}\n" }
+        print "\n"
       end
     end
   end
