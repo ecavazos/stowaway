@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
      "README",
      "Rakefile",
      "TODO.txt",
+     "VERSION.yml",
      "bin/stowaway",
      "lib/stowaway/file.rb",
      "lib/stowaway/fshelpyhelp.rb",
@@ -37,7 +38,8 @@ Gem::Specification.new do |s|
      "spec/lib/sweeper_spec.rb",
      "spec/runner_spec.rb",
      "spec/spec.opts",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "stowaway.gemspec"
   ]
   s.homepage = %q{http://www.iamneato.com}
   s.rdoc_options = ["--charset=UTF-8"]
