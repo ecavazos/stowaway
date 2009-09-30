@@ -1,6 +1,6 @@
 == Future
 
-* match files on path+name in order to retain uniqueness
-  * two files with the same name in different directories will be treated as the same file
+* when locator returns duplicate filenames, the files should be matched on path+name in order to retain uniqueness
+  * currently, two files with the same name in different directories will be treated as the same file
 * specify runner.rb
   * clean up it's dependencies

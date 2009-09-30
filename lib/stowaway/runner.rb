@@ -11,9 +11,9 @@ module Stowaway
     
     def run
       locator = Stowaway::Locator.new(@options.file_types)
-      images = locator.find_all @options.path
+      files = locator.find_all @options.path
 
-      fs = Stowaway::Sweeper.new images
+      fs = Stowaway::Sweeper.new files
       respond fs.sweep @options.path
     end
     
