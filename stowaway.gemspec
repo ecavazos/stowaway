@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{stowaway}
-  s.version = "0.0.1"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Emilio Cavazos"]
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
      "lib/stowaway/options.rb",
      "lib/stowaway/runner.rb",
      "lib/stowaway/sweeper.rb",
+     "pkg/stowaway-0.0.1.gem",
      "spec/data/testfile1.txt",
      "spec/data/testfile2.txt",
      "spec/lib/file_spec.rb",
