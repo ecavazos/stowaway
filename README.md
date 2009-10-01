@@ -11,7 +11,7 @@ Stowaway is a gem that searches a web project for files that aren't being used. 
 
 ## Installing
 
-    sudo gem install ecavazos-stowaway
+    sudo gem install stowaway
     
 ## Note
 
