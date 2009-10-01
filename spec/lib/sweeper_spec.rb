@@ -8,7 +8,8 @@ describe Stowaway::Sweeper do
     @f1 = Stowaway::FileObj.new('/fake/file1.jpg')
     @f2 = Stowaway::FileObj.new('/fake/file2.gif')
     @f3 = Stowaway::FileObj.new('/fake/file3.js')
-    @files = [@f1, @f2, @f3]
+    @f4 = Stowaway::FileObj.new('/fake/also/file3.js')
+    @files = [@f1, @f2, @f3, @f4]
     @sweeper = Stowaway::Sweeper.new(@files)
   end
   
@@ -24,12 +25,12 @@ describe Stowaway::Sweeper do
 
   it "should read through the file looking for matches" do
     @sweeper.inspect_file('spec/data/testfile1.txt')
-    @files.should == [@f3]
+    @files.should == [@f3, @f4]
   end
   
   it "should remove matches from the list of files to find" do
     line = 'file2.gif, file3.js'
-    @sweeper.remove_matches line
+    @sweeper.remove_match line
     @files.should == [@f1]
   end
   

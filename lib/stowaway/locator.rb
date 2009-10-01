@@ -7,7 +7,7 @@ module Stowaway
   
     def initialize(extensions)
       @extensions = extensions
-      @ignore = ["^\\."]
+      @ignore = [/^\./]
     end
   
     def type?(file)
