@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{stowaway}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Emilio Cavazos"]
-  s.date = %q{2009-09-30}
+  s.date = %q{2009-10-02}
   s.default_executable = %q{stowaway}
   s.email = %q{ejcavazos@gmail.com}
   s.executables = ["stowaway"]
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "TODO.txt",
      "VERSION.yml",
+     "bin/.stowaway.swp",
      "bin/stowaway",
      "lib/stowaway/file.rb",
      "lib/stowaway/fshelpyhelp.rb",
