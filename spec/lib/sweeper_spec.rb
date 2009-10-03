@@ -10,7 +10,12 @@ describe Stowaway::Sweeper do
     @f3 = Stowaway::FileObj.new('/fake/file3.js')
     @f4 = Stowaway::FileObj.new('/fake/also/file3.js')
     @files = [@f1, @f2, @f3, @f4]
-    @sweeper = Stowaway::Sweeper.new(@files)
+
+    @status_mock = mock('status_mock')
+    @status_mock.should_receive(:out).at_least(:once)
+    @status_mock.should_receive(:flush).at_least(:once)
+
+    @sweeper = Stowaway::Sweeper.new(@files, @status_mock)
   end
   
   it "should sweep through directory structure looking for matches" do
@@ -19,19 +24,13 @@ describe Stowaway::Sweeper do
   end
   
   it "should not examine ignored file types" do
-    @sweeper = Stowaway::Sweeper.new(@files, ["^\\.", ".rb", "testfile1"])
+    @sweeper = Stowaway::Sweeper.new(@files, @status_mock, ["^\\.", ".rb", "testfile1"])
     @sweeper.sweep('.').length.should == 2
   end
 
   it "should read through the file looking for matches" do
     @sweeper.inspect_file('spec/data/testfile1.txt')
     @files.should == [@f3, @f4]
-  end
-  
-  it "should remove matches from the list of files to find" do
-    line = 'file2.gif, file3.js'
-    @sweeper.remove_match line
-    @files.should == [@f1]
   end
   
 end

@@ -1,25 +1,24 @@
 require_relative 'fshelpyhelp'
+require_relative 'status'
 
 module Stowaway
   class Sweeper
     include FSHelpyHelp
 
-    def initialize(files_to_find, ext_to_ignore = nil)
+    def initialize(files_to_find, status = Status.new, ext_to_ignore = nil)
       @files_to_find = files_to_find
       @ignore = ext_to_ignore || [/^\.|\.jpg$|\.gif$|.png$/i]
+      @status = status
     end
   
     def inspect_file(file)
-      reset = "\r\e[0K"
-      print "#{reset}Sweeping: #{file}"
+      @status.out "Sweeping: #{file}"
       File.open(file, 'r') do |i|
         while line = i.gets
           remove_match(line)
         end
       end
-      sleep(0.12)
-      print reset
-      $stdout.flush
+      @status.flush
     end
 
     def remove_match(line)
