@@ -10,11 +10,16 @@ module Stowaway
     end
   
     def inspect_file(file)
+      reset = "\r\e[0K"
+      print "#{reset}Sweeping: #{file}"
       File.open(file, 'r') do |i|
         while line = i.gets
           remove_match(line)
         end
       end
+      sleep(0.12)
+      print reset
+      $stdout.flush
     end
 
     def remove_match(line)
