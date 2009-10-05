@@ -11,19 +11,6 @@ module Stowaway
       @status = status
     end
   
-    def inspect_file(file)
-      @status.out "Sweeping: #{file}"
-      File.open(file, 'r') do |i|
-        while line = i.gets
-          remove_match(line)
-        end
-      end
-      @status.flush
-    end
-
-    def remove_match(line)
-      @files_to_find.delete_if { |file| line.include?(file.name) }
-    end
   
     def sweep(path)
       dir = Dir.new(path)
@@ -42,5 +29,19 @@ module Stowaway
       @files_to_find
     end
 
+    private
+    def inspect_file(file)
+      @status.out "Sweeping: #{file}"
+      File.open(file, 'r') do |i|
+        while line = i.gets
+          remove_match(line)
+        end
+      end
+      @status.flush
+    end
+
+    def remove_match(line)
+      @files_to_find.delete_if { |file| line.include?(file.name) }
+    end
   end
 end
