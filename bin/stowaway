@@ -2,4 +2,4 @@
 
 require 'stowaway/runner' 
 runner = Stowaway::Runner.new(ARGV) 
-runner.run 
+runner.run

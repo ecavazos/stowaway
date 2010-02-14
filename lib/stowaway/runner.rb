@@ -20,6 +20,7 @@ module Stowaway
     end
     
     private
+
     def respond(not_found)
       if not_found.empty?
         print "Zero stowaways found. You run a tight ship.\n\n"

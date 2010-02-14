@@ -1,2 +1,9 @@
 Hello, I'm test data:
-file3.js
+
+This is testing files with the same name but different paths
+
+<img src="/fake/path1/button.jpg" />
+<img src="/fake/path2/button.jpg" />
+<a href="/fake/path/photo.jpg" />
+<script type="text/javascript" src="/fake/path/file.js" ></script>
+

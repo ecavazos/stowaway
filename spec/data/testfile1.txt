@@ -1,4 +1,7 @@
 this is a line of test text.
-this line has the name of a file: file1.jpg.
-this line also has the name of a file (file2.gif) and it is so awesome.
+this filename on this line should be ignored: file1.js.
+= javascript_include_tag "file.js"
+= javascript_include_tag "jquery.js", "home/index.js"
+= stylesheet_link_tag "file.css"
+= stylesheet_link_tag "reset", "common"
 the end.
