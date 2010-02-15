@@ -38,6 +38,12 @@ describe Stowaway::Sweeper do
     @files.should be_empty
   end
 
+  it "should match scripts referenced in a rails javascript_include_tag helper when no extension is given" do
+    @files << Stowaway::FileObj.new("/public/javascripts/application.js")
+    sweeper([/^\.|\.rb$|testfile2/]).sweep("spec/data")
+    @files.should be_empty
+  end
+
   it "should match multiple scripts referenced in a rails javascript_include_tag helper" do
     @files << Stowaway::FileObj.new("/public/javascripts/jquery.js")
     @files << Stowaway::FileObj.new("/public/javascripts/home/index.js")
@@ -73,12 +79,6 @@ describe Stowaway::Sweeper do
     sweeper([/^\.|\.rb$|testfile2/]).sweep("spec/data")
   end
 
-=begin
-  it "should remove matches and leave files that were not found" do
-    sweeper([/^\.|\.rb$|testfile1/]).sweep("spec/data")
-    @files.should == [@f1, @f2]
-  end
-=end
   it "should find images of the same name but with different paths" do
     @files << Stowaway::FileObj.new("/fake/path1/button.jpg")
     @files << Stowaway::FileObj.new("/fake/path2/button.jpg")
@@ -86,9 +86,10 @@ describe Stowaway::Sweeper do
     @files.should be_empty
   end
 
-  it "should find unique files based on path and name" do
+  it "should remove matches and leave files that were not found" do
     @files << Stowaway::FileObj.new("/a/stowaway/file.txt")
     sweeper([/^\.|\.rb$/]).sweep("spec/data")
+    @files.should_not be_empty
     @files.first.fullpath.should == "/a/stowaway/file.txt"
   end
   
