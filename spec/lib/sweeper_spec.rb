@@ -14,14 +14,26 @@ describe Stowaway::Sweeper do
     @status_mock = mock("status_mock", :null_object => true)
   end
   
-  it "should match images referened in a src attribute" do
+  it "should match images referenced in a src attribute" do
     @files << Stowaway::FileObj.new("/fake/path1/button.jpg")
     sweeper.sweep("spec/data")
     @files.should be_empty
   end
   
-  it "should match images referened in an href attribute" do
+  it "should match images referenced in an href attribute" do
     @files << Stowaway::FileObj.new("/fake/path/photo.jpg")
+    sweeper.sweep("spec/data")
+    @files.should be_empty
+  end
+
+  it "should match images referenced in an href attribute when using haml" do
+    @files << Stowaway::FileObj.new("/images/haml.jpg")
+    sweeper.sweep("spec/data")
+    @files.should be_empty
+  end
+
+  it "should match images referenced in a src attribute when using haml" do
+    @files << Stowaway::FileObj.new("/images/file.jpg")
     sweeper.sweep("spec/data")
     @files.should be_empty
   end

@@ -5,4 +5,7 @@ this filename on this line should be ignored: file1.js.
 = javascript_include_tag "application"
 = stylesheet_link_tag "file.css"
 = stylesheet_link_tag "reset", "common"
+%a{ :href => "/images/haml.jpg", :title => "haml" }
+%img{ :src => "/images/file.jpg", :alt => "file" }
+
 the end.
