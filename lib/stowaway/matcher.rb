@@ -2,31 +2,33 @@ module Stowaway
   class Matcher
     def match?(line, file)
       @line, @file = line, file
-      return true if html_attr_ref?
-      return true if haml_attr_ref?
-      return true if rails_js_ref?
-      return true if rails_css_ref?
+      html_attr_ref? ||
+      haml_attr_ref? ||
+      rails_js_ref?  ||
+      rails_css_ref? ||
+      css_url_ref?
     end
 
     private
 
     def html_attr_ref?
-      @line =~ /(src|link|href|:href)\s?[=|=>]\s?(["|'])(#{@file.fullpath})(\2)/
+      exp = /(src|link|href|:href)\s?[=|=>]\s?(["|'])(%s)(\2)/
+      @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
+      @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
     end
 
     def haml_attr_ref?
-      @line =~ /(:src|:link|:href)(\s?=>\s?)(["|'])(#{@file.fullpath})(\3)/
+      exp = /(:src|:link|:href)(\s?=>\s?)(["|'])(%s)(\3)/
+      @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
+      @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
     end
 
     def rails_js_ref?
       return false unless @line =~ /=?\s(javascript_include_tag)?\s(["|'])(.+)(\2)/
       params = $3.gsub(/[\s|"]/, "").split(",")
       params.each do |f|
-        if f =~ /\.js$/
-          return true if "/public/javascripts/#{f}" == @file.fullpath
-        else
-          return true if "/public/javascripts/#{f}.js" == @file.fullpath
-        end
+          return true if "/public/javascripts/#{f}" == @file.fullpath || 
+                         "/public/javascripts/#{f}.js" == @file.fullpath
       end
       false
     end
@@ -35,13 +37,21 @@ module Stowaway
       return false unless @line =~ /=?\s(stylesheet_link_tag)?\s(["|'])(.+)(\2)/
       params = $3.gsub(/[\s|"]/, "").split(",")
       params.each do |f|
-        if f =~ /\.css$/
-          return true if "/public/stylesheets/#{f}" == @file.fullpath
-        else
-          return true if "/public/stylesheets/#{f}.css" == @file.fullpath
-        end
+          return true if "/public/stylesheets/#{f}" == @file.fullpath ||
+                         "/public/stylesheets/#{f}.css" == @file.fullpath
       end
       false
+    end
+
+    def css_url_ref?
+      exp = /url\(["|']?(%s)\)/
+      @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
+      @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
+    end
+
+    def trim_public(path)
+      # remove /public from the beginning of the path
+      path.sub(/^\/public/, "")
     end
 
   end

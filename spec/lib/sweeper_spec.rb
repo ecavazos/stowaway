@@ -26,14 +26,26 @@ describe Stowaway::Sweeper do
     @files.should be_empty
   end
 
-  it "should match images referenced in an href attribute when using haml" do
-    @files << Stowaway::FileObj.new("/images/haml.jpg")
+  it "should match images referenced in a src attribute when files are stored in public folder" do
+    @files << Stowaway::FileObj.new("/public/fake/path1/button.jpg")
     sweeper.sweep("spec/data")
     @files.should be_empty
   end
 
-  it "should match images referenced in a src attribute when using haml" do
+  it "should match images referenced in an haml href attribute" do
+    @files << Stowaway::FileObj.new("/images/haml.jpg")
+    sweeper.sweep("spec/data")
+    @files.should be_empty
+  end
+  
+  it "should match images referenced in a haml src attribute" do
     @files << Stowaway::FileObj.new("/images/file.jpg")
+    sweeper.sweep("spec/data")
+    @files.should be_empty
+  end
+
+  it "should match images referenced in a haml src attribute when files are stored in public folder" do
+    @files << Stowaway::FileObj.new("/public/images/file.jpg")
     sweeper.sweep("spec/data")
     @files.should be_empty
   end

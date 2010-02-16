@@ -1,6 +1,6 @@
 == Future
 
-* when locator returns duplicate filenames, the files should be matched on path+name in order to retain uniqueness
-  * currently, two files with the same name in different directories will be treated as the same file
+* ignore vendor folder
+* move appropriate sweeper tests to matcher
 * specify runner.rb
   * clean up it's dependencies
