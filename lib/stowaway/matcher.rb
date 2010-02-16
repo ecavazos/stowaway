@@ -13,14 +13,12 @@ module Stowaway
 
     def html_attr_ref?
       exp = /(src|link|href|:href)\s?[=|=>]\s?(["|'])(%s)(\2)/
-      @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
-      @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
+      direct_or_public_dir_match?(exp)
     end
 
     def haml_attr_ref?
       exp = /(:src|:link|:href)(\s?=>\s?)(["|'])(%s)(\3)/
-      @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
-      @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
+      direct_or_public_dir_match?(exp)
     end
 
     def rails_js_ref?
@@ -45,6 +43,10 @@ module Stowaway
 
     def css_url_ref?
       exp = /url\(["|']?(%s)\)/
+      direct_or_public_dir_match?(exp)
+    end
+
+    def direct_or_public_dir_match?(exp)
       @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
       @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
     end

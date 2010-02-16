@@ -1,6 +1,7 @@
 == Future
 
 * ignore vendor folder
+* ignore spec folder
 * move appropriate sweeper tests to matcher
 * specify runner.rb
   * clean up it's dependencies
