@@ -6,7 +6,7 @@ module Stowaway
     end
 
     def flush
-      sleep(0.12)
+      #sleep(0.12)
       print RESET 
       $stdout.flush
     end

@@ -18,7 +18,8 @@ module Stowaway
     end
   
     def find_all(path, files = [])
-    
+      @root = path if @root.nil?
+
       dir = Dir.new(path)
     
       dir.each do |f|
@@ -29,7 +30,7 @@ module Stowaway
         if File.directory?(file) 
           find_all file, files
         elsif type?(f)
-          files << FileObj.new(file)
+          files << FileObj.new(file, @root)
         end
       end
       files

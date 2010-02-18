@@ -8,14 +8,13 @@ module Stowaway
 
     def initialize(files_to_find, status = Status.new, ext_to_ignore = nil)
       @files_to_find = files_to_find
-      @ignore = ext_to_ignore || [/^\.|\.jpg$|\.gif$|.png$/i]
+      @ignore = ext_to_ignore || [/^\.|\.jpg$|\.gif$|.png$|.ico$/i]
       @status = status
       @matcher = Matcher.new
     end
 
     def sweep(path)
       dir = Dir.new(path)
-      @root = path if @root.nil?
 
       dir.each do |f|
         next if ignore?(f)
@@ -37,7 +36,7 @@ module Stowaway
       @status.out "Sweeping: #{file}"
       File.open(file, 'r') do |i|
         while line = i.gets
-          remove_match(line)
+          remove_match(line) #rescue nil
         end
       end
       @status.flush

@@ -25,8 +25,8 @@ module Stowaway
       return false unless @line =~ /=?\s(javascript_include_tag)?\s(["|'])(.+)(\2)/
       params = $3.gsub(/[\s|"]/, "").split(",")
       params.each do |f|
-          return true if "/public/javascripts/#{f}" == @file.fullpath || 
-                         "/public/javascripts/#{f}.js" == @file.fullpath
+          return true if "/public/javascripts/#{f}" == @file.root_path || 
+                         "/public/javascripts/#{f}.js" == @file.root_path
       end
       false
     end
@@ -35,8 +35,8 @@ module Stowaway
       return false unless @line =~ /=?\s(stylesheet_link_tag)?\s(["|'])(.+)(\2)/
       params = $3.gsub(/[\s|"]/, "").split(",")
       params.each do |f|
-          return true if "/public/stylesheets/#{f}" == @file.fullpath ||
-                         "/public/stylesheets/#{f}.css" == @file.fullpath
+          return true if "/public/stylesheets/#{f}" == @file.root_path ||
+                         "/public/stylesheets/#{f}.css" == @file.root_path
       end
       false
     end
@@ -48,12 +48,12 @@ module Stowaway
 
     def direct_or_public_dir_match?(exp)
       @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
-      @line =~ Regexp.new(exp.to_s % trim_public(@file.fullpath))
+      @line =~ Regexp.new(exp.to_s % trim_public)
     end
 
-    def trim_public(path)
+    def trim_public
       # remove /public from the beginning of the path
-      path.sub(/^\/public/, "")
+      @file.root_path.sub(/\/public/, "")
     end
 
   end

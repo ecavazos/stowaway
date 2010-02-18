@@ -13,6 +13,7 @@ module Stowaway
       p "Locating files ..."
       locator = Stowaway::Locator.new(@options.file_types)
       files = locator.find_all @options.path
+      p @options.path.split("/").last
       p "#{files.size} files located"
       
       fs = Stowaway::Sweeper.new files

@@ -2,8 +2,9 @@ module Stowaway
   class FileObj
     attr :fullpath
     
-    def initialize(fullpath)
+    def initialize(fullpath, root = nil)
       @fullpath = fullpath
+      @root = root || Dir.pwd
     end
     
     def name
@@ -12,6 +13,11 @@ module Stowaway
     
     def path
       File.split(@fullpath)[0]
+    end
+
+    def root_path
+      root = @root.split("/").last
+      @fullpath.sub(/^.+\/#{root}/, "")
     end
     
     def ==(fileObj)
