@@ -32,7 +32,8 @@ module Stowaway
           p "Warning: #{results[:name_only].length} file(s) partially matched on name only"
         end
 
-        print "--------------------------\n\n"
+        100.times { print "-" }
+        print "\n\n"
         results[:files_to_find].each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
         print "\n"
       end

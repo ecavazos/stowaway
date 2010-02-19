@@ -22,23 +22,11 @@ module Stowaway
     end
 
     def rails_js_ref?
-      return false unless @line =~ /=?\s(javascript_include_tag)?\s(["|'])(.+)(\2)/
-      params = $3.gsub(/[\s|"]/, "").split(",")
-      params.each do |f|
-          return true if "/public/javascripts/#{f}" == @file.root_path || 
-                         "/public/javascripts/#{f}.js" == @file.root_path
-      end
-      false
+      rails_helper_ref?("javascript_include", "javascripts", "js")
     end
 
     def rails_css_ref?
-      return false unless @line =~ /=?\s(stylesheet_link_tag)?\s(["|'])(.+)(\2)/
-      params = $3.gsub(/[\s|"]/, "").split(",")
-      params.each do |f|
-          return true if "/public/stylesheets/#{f}" == @file.root_path ||
-                         "/public/stylesheets/#{f}.css" == @file.root_path
-      end
-      false
+      rails_helper_ref?("stylesheet_link", "stylesheets", "css")
     end
 
     def css_url_ref?
@@ -46,9 +34,20 @@ module Stowaway
       direct_or_public_dir_match?(exp)
     end
 
-    def direct_or_public_dir_match?(exp)
-      @line =~ Regexp.new(exp.to_s % @file.fullpath) ||
-      @line =~ Regexp.new(exp.to_s % trim_public)
+    def rails_helper_ref?(helper_name, directory, extension)
+      expression = Regexp.new(/=?\s(%s_tag)?\s(["|'])(.+)(\2)/.to_s % helper_name)
+      return false unless @line =~ expression
+      params = $3.gsub(/[\s|"]/, "").split(",")
+      params.each do |f|
+          return true if "/public/#{directory}/#{f}" == @file.root_path ||
+                         "/public/#{directory}/#{f}.#{extension}" == @file.root_path
+      end
+      false
+    end
+
+    def direct_or_public_dir_match?(expression)
+      @line =~ Regexp.new(expression.to_s % @file.fullpath) ||
+      @line =~ Regexp.new(expression.to_s % trim_public)
     end
 
     def trim_public
