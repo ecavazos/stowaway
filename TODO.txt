@@ -1,5 +1,7 @@
 == Future
 
+* add verbose option to output file names of the files that weren't found and
+  the files that were only partially matched on name.
 * ignore vendor folder
 * ignore spec folder
 * move appropriate sweeper tests to matcher

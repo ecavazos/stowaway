@@ -6,8 +6,7 @@ module Stowaway
       haml_attr_ref? ||
       rails_js_ref?  ||
       rails_css_ref? ||
-      css_url_ref?   ||
-      line.include?(file.name)
+      css_url_ref?
     end
 
     private

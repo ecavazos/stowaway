@@ -10,11 +10,11 @@ module Stowaway
     end
     
     def run
-      p "Locating files ..."
+      print "\nLocating files ... "
       locator = Stowaway::Locator.new(@options.file_types)
       files = locator.find_all @options.path
-      p @options.path.split("/").last
-      p "#{files.size} files located"
+      @total = files.length
+      p "#{@total} files located"
       
       fs = Stowaway::Sweeper.new files
       respond fs.sweep @options.path
@@ -22,13 +22,18 @@ module Stowaway
     
     private
 
-    def respond(not_found)
-      if not_found.empty?
+    def respond(results)
+      if results[:files_to_find].empty?
         print "Zero stowaways found. You run a tight ship.\n\n"
       else
-        print "\nYou have #{not_found.length} stowaway(s)\n"
+        print "\nYou have #{results[:files_to_find].length} stowaway(s) ... shameful\n\n"
+
+        unless results[:name_only].empty?
+          p "Warning: #{results[:name_only].length} file(s) partially matched on name only"
+        end
+
         print "--------------------------\n\n"
-        not_found.each_with_index { |f, i| print "#{i+1}: #{f.fullpath}\n" }
+        results[:files_to_find].each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
         print "\n"
       end
     end

@@ -7,7 +7,7 @@ module Stowaway
     include FSHelpyHelp
 
     def initialize(files_to_find, status = Status.new, ext_to_ignore = nil)
-      @files_to_find = files_to_find
+      @results = { :files_to_find => files_to_find, :name_only => []}
       @ignore = ext_to_ignore || [/^\.|\.jpg$|\.gif$|.png$|.ico$/i]
       @status = status
       @matcher = Matcher.new
@@ -27,7 +27,7 @@ module Stowaway
           inspect_file(file)
         end
       end
-      @files_to_find
+      @results
     end
 
     private
@@ -43,7 +43,14 @@ module Stowaway
     end
 
     def remove_match(line)
-      @files_to_find.delete_if { |file| @matcher.match?(line, file) }
+      @results[:files_to_find].delete_if do |file|
+        if @matcher.match?(line, file)
+          true
+        elsif line.include?(file.name)
+          @results[:name_only] << file
+          true
+        end
+      end
     end
 
   end
