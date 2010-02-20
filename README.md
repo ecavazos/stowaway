@@ -1,17 +1,21 @@
 # Stowaway
 
 Stowaway will search through the source code of a web project and find all
-of the images, scripts or stylesheets that aren't being used.  To use,
+of the images, scripts and stylesheets that aren't being used.  To use,
 simply provide the path to the directory you wish to search.
 
 ## Example
     stowaway ~/repos/rails/my_rails_app/
 
-Stowaway, by default, will search for the most common file types.
+Stowaway, by default, will search for the most common file types. Using the
+*-t* flag, you can tell stowaway to use custom file types.
 
 ## Default Types
 
- * .jpg .gif .png .ico
+ * .jpg
+ * .gif
+ * .png
+ * .ico
  * .js
  * .css
 
