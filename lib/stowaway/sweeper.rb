@@ -1,6 +1,7 @@
-require_relative 'fshelpyhelp'
-require_relative 'status'
+require_relative "fshelpyhelp"
+require_relative "status"
 require_relative "matcher"
+require_relative "file"
 
 module Stowaway
   class Sweeper
