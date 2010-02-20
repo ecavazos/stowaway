@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{stowaway}
-  s.version = "0.1.5"
+  s.version = "0.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Emilio Cavazos"]
-  s.date = %q{2010-02-19}
+  s.date = %q{2010-02-20}
   s.default_executable = %q{stowaway}
   s.email = %q{ejcavazos@gmail.com}
   s.executables = ["stowaway"]
@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
      "spec/data/testfile2.txt",
      "spec/lib/file_spec.rb",
      "spec/lib/locator_spec.rb",
+     "spec/lib/matcher_spec.rb",
      "spec/lib/options_spec.rb",
      "spec/lib/sweeper_spec.rb",
      "spec/runner_spec.rb",
@@ -52,6 +53,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/lib/file_spec.rb",
      "spec/lib/locator_spec.rb",
+     "spec/lib/matcher_spec.rb",
      "spec/lib/options_spec.rb",
      "spec/lib/sweeper_spec.rb",
      "spec/runner_spec.rb",
