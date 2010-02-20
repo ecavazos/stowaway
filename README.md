@@ -4,13 +4,13 @@ Stowaway will search through the source code of a web project and find all
 of the images, scripts and stylesheets that aren't being used.  To use,
 simply provide the path to the directory you wish to search.  
 
-*Please read the _warning_ section at the end before using*
+***Please read the _warning_ section at the end before using***
 
 ## Example
     stowaway ~/repos/rails/my_rails_app/
 
 Stowaway, by default, will search for the most common file types. Using the
-_-t_ flag, you can tell stowaway to use custom file types.
+**-t** flag, you can tell stowaway to use custom file types.
 
 ## Default Types
 
@@ -71,3 +71,5 @@ Stowaway is useful for maintaining a tidy source tree, but it's not perfect.
 I probably don't need to say this, but a good VCS is mandatory.  So before you
 start deleting files, make sure all your awesome changes have been committed and
 that you double-check stowaway's result against your own manual process.
+
+This gem only works on ruby 1.9 ATM
