@@ -7,11 +7,12 @@ module Stowaway
   class Sweeper
     include FSHelpyHelp
 
-    def initialize(files_to_find, status = Status.new, ext_to_ignore = nil)
-      @results = { :files_to_find => files_to_find, :name_only => []}
-      @ignore = ext_to_ignore || [/^\.|\.jpg$|\.gif$|.png$|.ico$/i]
+    def initialize(files_to_find, status = Status.new, matcher = Matcher.new, ext_to_ignore = [])
+      @results = { :files_to_find => files_to_find, :name_only_matches => []}
       @status = status
-      @matcher = Matcher.new
+      @matcher = matcher
+      @ignore = ext_to_ignore
+      @ignore += [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
     end
 
     def sweep(path)
@@ -48,7 +49,7 @@ module Stowaway
         if @matcher.match?(line, file)
           true
         elsif line.include?(file.name)
-          @results[:name_only] << file
+          @results[:name_only_matches] << file
           true
         end
       end

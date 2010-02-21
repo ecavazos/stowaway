@@ -28,8 +28,8 @@ module Stowaway
       else
         print "\nYou have #{results[:files_to_find].length} stowaway(s) ... shameful\n\n"
 
-        unless results[:name_only].empty?
-          p "Warning: #{results[:name_only].length} file(s) partially matched on name only"
+        unless results[:name_only_matches].empty?
+          p "Warning: #{results[:name_only_matches].length} file(s) partially matched on name only"
         end
 
         60.times { print "-" }

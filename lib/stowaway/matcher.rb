@@ -38,7 +38,7 @@ module Stowaway
 
     def rails_helper_ref?(helper_name, directory, extension)
       expression = Regexp.new(/=\s?(%s_tag)?\s(["|'])(.+)(\2)/.to_s % helper_name)
-      return false unless @line =~ expression
+      return false if @line !~ expression
       params = $3.gsub(/[\s|"|']/, "").split(",")
       params.each do |f|
           return true if "/public/#{directory}/#{f}" == @file.root_path ||
