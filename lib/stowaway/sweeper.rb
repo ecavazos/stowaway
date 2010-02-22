@@ -2,16 +2,17 @@ require_relative "fshelpyhelp"
 require_relative "status"
 require_relative "matcher"
 require_relative "file"
+require "ostruct"
 
 module Stowaway
   class Sweeper
     include FSHelpyHelp
 
-    def initialize(files_to_find, status = Status.new, matcher = Matcher.new, ext_to_ignore = [])
-      @results = { :files_to_find => files_to_find, :name_only_matches => []}
+    def initialize(files, status = Status.new, matcher = Matcher.new, ext_to_ignore = [])
+      @result = OpenStruct.new({ :files => files, :name_only_matches => []})
       @status = status
       @matcher = matcher
-      @ignore = ext_to_ignore
+      @ignore = ext_to_ignore || []
       @ignore += [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
     end
 
@@ -29,7 +30,7 @@ module Stowaway
           inspect_file(file)
         end
       end
-      @results
+      @result
     end
 
     private
@@ -45,11 +46,11 @@ module Stowaway
     end
 
     def remove_match(line)
-      @results[:files_to_find].delete_if do |file|
+      @result.files.delete_if do |file|
         if @matcher.match?(line, file)
           true
         elsif line.include?(file.name)
-          @results[:name_only_matches] << file
+          @result.name_only_matches << file
           true
         end
       end

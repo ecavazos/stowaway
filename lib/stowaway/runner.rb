@@ -22,19 +22,19 @@ module Stowaway
     
     private
 
-    def respond(results)
-      if results[:files_to_find].empty?
+    def respond(result)
+      if result.files.empty?
         print "Zero stowaways found. You run a tight ship.\n\n"
       else
-        print "\nYou have #{results[:files_to_find].length} stowaway(s) ... shameful\n\n"
+        print "\nYou have #{result.files.length} stowaway(s) ... shameful\n\n"
 
-        unless results[:name_only_matches].empty?
-          p "Warning: #{results[:name_only_matches].length} file(s) partially matched on name only"
+        unless result.name_only_matches.empty?
+          p "Warning: #{result.name_only_matches.length} file(s) partially matched on name only"
         end
 
         60.times { print "-" }
         print "\n\n"
-        results[:files_to_find].each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
+        result.files.each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
         print "\n"
       end
     end

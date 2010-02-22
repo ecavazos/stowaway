@@ -20,6 +20,12 @@ describe Stowaway::Sweeper do
     @files.should be_empty
   end
 
+  it "should return an OpenStruct with the result of the sweeping" do
+    result = sweeper.sweep("spec/data")
+    result.files.should be_an_instance_of Array
+    result.name_only_matches.should be_an_instance_of Array
+  end
+
   it "should not sweep through ignored file types" do
     @files << Stowaway::FileObj.new("/fake/path1/button.jpg")
     sweeper([/^\.|\.rb$|\.txt$/]).sweep("spec/data")
@@ -45,7 +51,7 @@ describe Stowaway::Sweeper do
 
   it "should add a file matched on name only to an array of partially matched files" do
     @files << Stowaway::FileObj.new("/missing/button.jpg")
-    sweeper([/^\.|\.rb$/]).sweep("spec/data").should have(1)[:name_only_matches]
+    sweeper([/^\.|\.rb$/]).sweep("spec/data").should have(1).name_only_matches
   end
 
   it "should not remove files that were not found" do
