@@ -27,19 +27,36 @@ module Stowaway
       name_only_matches = result.name_only_matches
 
       if files.empty?
-        print "Zero stowaways found. You run a tight ship.\n\n"
-      else
-        print "\nYou have #{files.length} stowaway(s) ... shameful\n\n"
-
-        unless name_only_matches.empty?
-          p "Warning: #{name_only_matches.length} file(s) partially matched on name only"
-        end
-
-        60.times { print "-" }
-        print "\n\n"
-        files.each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
-        print "\n"
+        print "Zero stowaways found. "
       end
+
+      if files.empty? and name_only_matches.empty?
+        print "You run a tight ship."
+        blank_lines
+        return
+      end
+      
+      damage(result)
+    end
+    
+    def damage(result)
+      files = result.files
+      name_only_matches = result.name_only_matches
+
+      print "\nYou have #{files.length} stowaway(s) ... scurvy dogs!\n"
+      warn name_only_matches
+      60.times { print "-" }
+      blank_lines
+      files.each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
+    end
+
+    def warn name_only_matches
+        return if name_only_matches.empty?
+        print "WARNING: #{name_only_matches.length} file(s) partially matched on name only\n"
+    end
+
+    def blank_lines
+      print "\n\n"
     end
   end
 end

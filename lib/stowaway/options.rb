@@ -13,6 +13,7 @@ module Stowaway
     end
     
     private
+
     def parse(argv) 
       OptionParser.new do |opts| 
         opts.banner = "Usage: stowaway [ options ] path/to/site" 
