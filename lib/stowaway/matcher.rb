@@ -41,15 +41,17 @@ module Stowaway
       return false if @line !~ expression
       params = $3.gsub(/[\s|"|']/, "").split(",")
       params.each do |f|
-          return true if "/public/#{directory}/#{f}" == @file.root_path ||
-                         "/public/#{directory}/#{f}.#{extension}" == @file.root_path
+          path = @file.root_path
+          return true if "/public/#{directory}/#{f}" == path ||
+                         "/public/#{directory}/#{f}.#{extension}" == path
       end
       false
     end
 
     def direct_or_public_dir_match?(expression)
-      @line =~ Regexp.new(expression.to_s % @file.root_path) ||
-      @line =~ Regexp.new(expression.to_s % trim_public)
+      expression = expression.to_s
+      @line =~ Regexp.new(expression % @file.root_path) ||
+      @line =~ Regexp.new(expression % trim_public)
     end
 
     def trim_public

@@ -23,18 +23,21 @@ module Stowaway
     private
 
     def respond(result)
-      if result.files.empty?
+      files = result.files
+      name_only_matches = result.name_only_matches
+
+      if files.empty?
         print "Zero stowaways found. You run a tight ship.\n\n"
       else
-        print "\nYou have #{result.files.length} stowaway(s) ... shameful\n\n"
+        print "\nYou have #{files.length} stowaway(s) ... shameful\n\n"
 
-        unless result.name_only_matches.empty?
-          p "Warning: #{result.name_only_matches.length} file(s) partially matched on name only"
+        unless name_only_matches.empty?
+          p "Warning: #{name_only_matches.length} file(s) partially matched on name only"
         end
 
         60.times { print "-" }
         print "\n\n"
-        result.files.each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
+        files.each_with_index { |f, i| print "#{i+1}: #{f.root_path}\n" }
         print "\n"
       end
     end
