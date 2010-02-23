@@ -8,7 +8,10 @@ describe Stowaway::Runner do
   end
 
   def runner
-    @runner ||= Stowaway::Runner.new(@argv)
+    options = Stowaway::Options.new(@argv)
+    locator = Stowaway::Locator.new(options.file_types)
+    sweeper = Stowaway::Sweeper.new
+    @runner ||= Stowaway::Runner.new(options, locator, sweeper)
   end
 
   it "should notify user that file location has begun" do

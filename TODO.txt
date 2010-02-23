@@ -4,6 +4,5 @@
   the files that were only partially matched on name.
 * ignore vendor folder
 * ignore spec folder
-* move appropriate sweeper tests to matcher
+* DRY options.rb
 * specify runner.rb
-  * clean up it's dependencies

@@ -5,6 +5,11 @@ require_relative "file"
 require "ostruct"
 
 module Stowaway
+
+  # Sweeper will sweep through a directory recursively (path) and try to find
+  # references to files in the array of FileObjs passed in as the second
+  # parameter.
+
   class Sweeper
     include FSHelpyHelp
 
