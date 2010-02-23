@@ -5,19 +5,18 @@ require_relative 'sweeper'
 module Stowaway
   class Runner
     
-    def initialize(argv)
-      @options = Options.new(argv)
+    def initialize(options, locator, sweeper)
+      @options = options
+      @locator = locator
+      @sweeper = sweeper
     end
     
     def run
+      path = @options.path
       print "\nLocating files ... "
-      locator = Stowaway::Locator.new(@options.file_types)
-      files = locator.find_all @options.path
-      @total = files.length
-      p "#{@total} files located"
-      
-      fs = Stowaway::Sweeper.new files
-      respond fs.sweep @options.path
+      files = @locator.find_all(path)
+      print "#{files.length} files located\n"
+      respond @sweeper.sweep(path, files)
     end
     
     private

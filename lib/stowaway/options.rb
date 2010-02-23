@@ -8,13 +8,14 @@ module Stowaway
     
     def initialize(argv)
       @file_types = DEFAULT_FILE_TYPES
-      parse(argv)
+      @argv = argv
       @path = argv[0]
+      parse()
     end
     
     private
 
-    def parse(argv) 
+    def parse
       OptionParser.new do |opts| 
         opts.banner = "Usage: stowaway [ options ] path/to/site" 
         
@@ -28,8 +29,8 @@ module Stowaway
         end 
         
         begin 
-          argv = ["-h"] if argv.empty? 
-          opts.parse!(argv) 
+          @argv = ["-h"] if @argv.empty? 
+          opts.parse!(@argv) 
         rescue OptionParser::ParseError => e 
           STDERR.puts e.message, "\n", opts 
           exit(-1) 

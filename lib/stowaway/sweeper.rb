@@ -8,15 +8,16 @@ module Stowaway
   class Sweeper
     include FSHelpyHelp
 
-    def initialize(files, status = Status.new, matcher = Matcher.new, ext_to_ignore = [])
-      @result = OpenStruct.new({ :files => files, :name_only_matches => []})
+    def initialize(status = Status.new, matcher = Matcher.new, ext_to_ignore = [])
       @status = status
       @matcher = matcher
       @ignore = ext_to_ignore || []
       @ignore += [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
     end
 
-    def sweep(path)
+    def sweep(path, files=nil)
+      @result ||= OpenStruct.new({ :files => files, :name_only_matches => []})
+
       dir = Dir.new(path)
 
       dir.each do |f|
