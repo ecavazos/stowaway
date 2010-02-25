@@ -14,9 +14,9 @@ module Stowaway
     def run
       path = @options.path
       print "\nLocating files ... "
-      files = @locator.find_all(path)
-      print "#{files.length} files located\n"
-      respond @sweeper.sweep(path, files)
+      assets = @locator.find_all(path)
+      print "#{assets.length} files located\n"
+      respond @sweeper.sweep(path, assets)
     end
     
     private

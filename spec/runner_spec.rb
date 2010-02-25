@@ -1,30 +1,53 @@
 require 'spec/spec_helper'
 require 'lib/stowaway/runner'
 
+class Stowaway::Status
+  # mock so I don't look at noise
+  def out(msg); end
+  def flush; end
+end
+
 describe Stowaway::Runner do
 
   before(:each) do
-    @argv = []
+    @argv = ["."]
+    @options = Stowaway::Options.new(@argv)
+    @locator = Stowaway::Locator.new(@options.file_types)
   end
 
   def runner
-    options = Stowaway::Options.new(@argv)
-    locator = Stowaway::Locator.new(options.file_types)
     sweeper = Stowaway::Sweeper.new
-    @runner ||= Stowaway::Runner.new(options, locator, sweeper)
+    @runner ||= Stowaway::Runner.new(@options, @locator, sweeper)
   end
 
-  it "should notify user that file location has begun" do
-    @argv << "."
-    runner.should_receive(:print).with("\nLocating files ... ")
-    runner.should_receive(:print).any_number_of_times
-    runner.run
+  describe "output" do
+    it "should notify user that file location has begun" do
+      runner.should_receive(:print).with("\nLocating files ... ")
+      runner.should_receive(:print).any_number_of_times
+      runner.run
+    end
+
+    it "should notify user of the total number of files that were found" do
+      runner.should_receive(:print).with("0 files located\n")
+      runner.should_receive(:print).any_number_of_times
+      runner.run
+    end
+
+    it "should notify user that no stowaways were found when all files-to-find have been deleted" do
+      runner.should_receive(:print).with("Zero stowaways found. ")
+      runner.should_receive(:print).any_number_of_times
+      runner.run
+    end
+
+    it "should tell user how awesome their cleanliness is" do
+      runner.should_receive(:print).with("You run a tight ship.")
+      runner.should_receive(:print).any_number_of_times
+      runner.run
+    end
   end
 
-  it "should notify user of the total number of files that were found" do
-    @argv << "."
-    runner.should_receive(:print).with("0 files located\n").any_number_of_times
-    runner.should_receive(:print).any_number_of_times
+  it "should locate all assets" do
+    @locator.should_receive(:find_all).with(".").and_return([])
     runner.run
   end
 end
