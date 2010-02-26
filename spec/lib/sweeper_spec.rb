@@ -4,13 +4,16 @@ require "lib/stowaway/sweeper"
 require "lib/stowaway/matcher"
 
 describe Stowaway::Sweeper do
-  
+
+  Stowaway::Output.class_eval do
+    def print str;end
+  end
+
   def sweeper(ignore = nil)
-    @sweeper ||= Stowaway::Sweeper.new(@status_mock, Stowaway::Matcher.new, ignore)
+    @sweeper ||= Stowaway::Sweeper.new(Stowaway::Matcher.new, ignore)
   end
 
   before(:each) do
-    @status_mock = mock("status_mock", :null_object => true)
   end
   
   it "should remove files when a reference to the file is found in source" do
@@ -32,12 +35,12 @@ describe Stowaway::Sweeper do
   end
   
   it "should output a message when sweeping through a file" do 
-    @status_mock.should_receive(:out).with("Sweeping: spec/data/testfile1.txt").once
+    sweeper.should_receive(:clr_print).with("Sweeping: spec/data/testfile1.txt").once
     sweeper([/^\.|\.rb$|testfile2/]).sweep("spec/data", [])
   end
 
   it "should flush the output after sweeping through a file" do 
-    @status_mock.should_receive(:flush).once
+    sweeper.should_receive(:flush).once
     sweeper([/^\.|\.rb$|testfile2/]).sweep("spec/data", [])
   end
 

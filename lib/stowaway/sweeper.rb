@@ -1,5 +1,5 @@
 require_relative "fshelpyhelp"
-require_relative "status"
+require_relative "output"
 require_relative "matcher"
 require_relative "file"
 require "ostruct"
@@ -12,9 +12,9 @@ module Stowaway
 
   class Sweeper
     include FSHelpyHelp
+    include Output
 
-    def initialize(status = Status.new, matcher = Matcher.new, ext_to_ignore = [])
-      @status = status
+    def initialize(matcher = Matcher.new, ext_to_ignore = [])
       @matcher = matcher
       @ignore = ext_to_ignore || []
       @ignore += [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
@@ -42,13 +42,13 @@ module Stowaway
     private
 
     def inspect_file(file)
-      @status.out "Sweeping: #{file}"
+      clr_print("Sweeping: #{file}")
       File.open(file, 'r') do |i|
         while line = i.gets
           remove_match(line) #rescue nil
         end
       end
-      @status.flush
+      flush
     end
 
     def remove_match(line)
