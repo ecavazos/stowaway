@@ -16,8 +16,8 @@ module Stowaway
 
     def initialize(matcher = Matcher.new, ext_to_ignore = [])
       @matcher = matcher
-      @ignore = ext_to_ignore || []
-      @ignore += [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
+      @ignore = ext_to_ignore
+      @ignore << /^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i
     end
 
     def sweep(path, files=nil)
