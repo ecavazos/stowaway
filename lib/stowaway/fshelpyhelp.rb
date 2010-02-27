@@ -1,10 +1,28 @@
-module FSHelpyHelp
-  def ignore?(file)
-    @ignore.each do |exp|
-      if file.match(exp)
-        return true
+module Stowaway
+  module FSHelpyHelp
+    def ignore?(file)
+      @ignore.each do |exp|
+        if file.match(exp)
+          return true
+        end
+      end
+      false
+    end
+
+    def recursively(path, &block)
+      dir = Dir.new(path)
+
+      dir.each do |f|
+        next if ignore?(f)
+
+        file_p = File.join(dir.path, f)
+
+        if File.directory?(file_p)
+          recursively(file_p, &block)
+        else
+          yield(file_p)
+        end
       end
     end
-    false
   end
 end

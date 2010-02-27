@@ -34,7 +34,7 @@ describe Stowaway::Sweeper do
     files.length.should == 1
   end
   
-  it "should output a message when sweeping through a file" do 
+  it "should print the path to the file (relative to root) being swept through" do 
     @ignore << /testfile2/
     sweeper.should_receive(:clr_print).once.with("  => /testfile1.txt")
     sweeper.sweep("spec/data", [])

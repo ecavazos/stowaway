@@ -20,38 +20,30 @@ module Stowaway
       @ignore << /^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i
     end
 
-    def sweep(path, files=nil)
-      @root ||= path
-      @result ||= OpenStruct.new({ :files => files, :name_only_matches => []})
-
-      dir = Dir.new(path)
-
-      dir.each do |f|
-        next if ignore?(f)
-
-        file = File.join(dir.path, f)
-
-        if File.directory?(file)
-          sweep(file)
-        else
-          inspect_file(file)
-        end
+    def sweep(path, files)
+      @root = path
+      @result = OpenStruct.new({ :files => files, :name_only_matches => []})
+      recursively(path) do |file_p|
+          inspect_file(file_p)
       end
       @result
     end
 
     private
 
-    def inspect_file(file)
-      root = @root.split("/").last
-      file_name = file.sub(/^.+\/(#{root})/, "")
-      clr_print("  => #{file_name}")
-      File.open(file, "r") do |i|
+    def inspect_file(file_p)
+      clr_print("  => #{path_relative_to_root(file_p)}")
+      File.open(file_p, "r") do |i|
         while line = i.gets
           remove_match(line) #rescue nil
         end
       end
       flush
+    end
+
+    def path_relative_to_root(file_p)
+      root = @root.split("/").last
+      file_p.sub(/^.+\/(#{root})/, "")
     end
 
     def remove_match(line)

@@ -10,23 +10,17 @@ module Stowaway
       @ignore = [/^\./]
     end
 
-    def find_all(path, files = [])
-      @root = path if @root.nil?
-
-      dir = Dir.new(path)
-
-      dir.each do |f|
-        next if ignore?(f)
-
-        file = File.join(dir.path, f)
-
-        if File.directory?(file) 
-          find_all file, files
-        elsif type?(f)
-          files << FileObj.new(file, @root)
-        end
+    def find_all(path)
+      @root = path
+      @files = []
+      recursively(path) do |file_p|
+        push_if_ext_match(file_p)
       end
-      files
+      @files
+    end
+
+    def push_if_ext_match(file_p)
+      @files << FileObj.new(file_p, @root) if type?(file_p)
     end
 
     def type?(file)
