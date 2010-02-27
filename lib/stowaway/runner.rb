@@ -15,7 +15,10 @@ module Stowaway
       path = @options.path
       print "\nLocating files ... "
       assets = @locator.find_all(path)
-      print "#{assets.length} files located\n"
+      print "#{assets.length} files located"
+      blank_lines
+      Dir.chdir(@options.path)
+      puts "sweeping: #{Dir.pwd}"
       respond @sweeper.sweep(path, assets)
     end
     

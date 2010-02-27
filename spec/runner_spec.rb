@@ -28,7 +28,7 @@ describe Stowaway::Runner do
     end
 
     it "should notify user of the total number of files that were found" do
-      runner.should_receive(:print).with("0 files located\n")
+      runner.should_receive(:print).with("0 files located")
       runner.should_receive(:print).any_number_of_times
       runner.run
     end

@@ -36,7 +36,7 @@ describe Stowaway::Sweeper do
   
   it "should output a message when sweeping through a file" do 
     @ignore << /testfile2/
-    sweeper.should_receive(:clr_print).once.with("Sweeping: spec/data/testfile1.txt")
+    sweeper.should_receive(:clr_print).once.with("  => /testfile1.txt")
     sweeper.sweep("spec/data", [])
   end
 

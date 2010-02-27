@@ -21,6 +21,7 @@ module Stowaway
     end
 
     def sweep(path, files=nil)
+      @root ||= path
       @result ||= OpenStruct.new({ :files => files, :name_only_matches => []})
 
       dir = Dir.new(path)
@@ -42,8 +43,10 @@ module Stowaway
     private
 
     def inspect_file(file)
-      clr_print("Sweeping: #{file}")
-      File.open(file, 'r') do |i|
+      root = @root.split("/").last
+      file_name = file.sub(/^.+\/(#{root})/, "")
+      clr_print("  => #{file_name}")
+      File.open(file, "r") do |i|
         while line = i.gets
           remove_match(line) #rescue nil
         end
