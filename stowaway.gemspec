@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{stowaway}
-  s.version = "0.1.10"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Emilio Cavazos"]
-  s.date = %q{2010-02-23}
+  s.date = %q{2010-02-26}
   s.default_executable = %q{stowaway}
   s.email = %q{ejcavazos@gmail.com}
   s.executables = ["stowaway"]
@@ -30,8 +30,8 @@ Gem::Specification.new do |s|
      "lib/stowaway/locator.rb",
      "lib/stowaway/matcher.rb",
      "lib/stowaway/options.rb",
+     "lib/stowaway/output.rb",
      "lib/stowaway/runner.rb",
-     "lib/stowaway/status.rb",
      "lib/stowaway/sweeper.rb",
      "spec/data/testfile1.txt",
      "spec/data/testfile2.txt",
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
      "spec/lib/locator_spec.rb",
      "spec/lib/matcher_spec.rb",
      "spec/lib/options_spec.rb",
+     "spec/lib/output_spec.rb",
      "spec/lib/sweeper_spec.rb",
      "spec/runner_spec.rb",
      "spec/spec.opts",
@@ -55,6 +56,7 @@ Gem::Specification.new do |s|
      "spec/lib/locator_spec.rb",
      "spec/lib/matcher_spec.rb",
      "spec/lib/options_spec.rb",
+     "spec/lib/output_spec.rb",
      "spec/lib/sweeper_spec.rb",
      "spec/runner_spec.rb",
      "spec/spec_helper.rb"
