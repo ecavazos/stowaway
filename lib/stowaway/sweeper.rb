@@ -23,9 +23,8 @@ module Stowaway
     def sweep(path, files)
       @root = path
       @result = OpenStruct.new({ :files => files, :name_only_matches => []})
-      recursively(path) do |file_p|
-          inspect_file(file_p)
-      end
+      ignore_special_directories(@root)
+      recursively(path) { |fp| inspect_file(fp) }
       @result
     end
 
@@ -35,6 +34,7 @@ module Stowaway
       clr_print("  => #{path_relative_to_root(file_p)}")
       File.open(file_p, "r") do |i|
         while line = i.gets
+          next unless line.valid_encoding?
           remove_match(line) #rescue nil
         end
       end

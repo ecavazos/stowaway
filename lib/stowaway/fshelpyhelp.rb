@@ -9,10 +9,15 @@ module Stowaway
       false
     end
 
+    def ignore_special_directories(root)
+      @ignore << "/#{root}\/test$|spec$|vendor$|features$"
+    end
+
     def recursively(path, &block)
       dir = Dir.new(path)
 
       dir.each do |f|
+        next if ignore?(dir.path)
         next if ignore?(f)
 
         file_p = File.join(dir.path, f)

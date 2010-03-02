@@ -13,6 +13,7 @@ module Stowaway
     def find_all(path)
       @root = path
       @files = []
+      ignore_special_directories(@root)
       recursively(path) do |file_p|
         push_if_ext_match(file_p)
       end
