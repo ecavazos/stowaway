@@ -2,6 +2,7 @@ require "spec/spec_helper"
 require "lib/stowaway/file"
 require "lib/stowaway/sweeper"
 require "lib/stowaway/matcher"
+require "spec/lib/io_mock.rb"
 
 describe Stowaway::Sweeper do
 
@@ -64,5 +65,12 @@ describe Stowaway::Sweeper do
     files.should_not be_empty
     files.first.fullpath.should == "/a/stowaway.txt"
   end
-  
+
+  it "should ignore lines with invalid encoding" do
+    files = [Stowaway::FileObj.new("/fake/path1/button.jpg")]
+    File.stub!(:open).and_yield(IOMock.new)
+    sweeper.should_not_receive(:remove_match)
+    sweeper.sweep("spec/data", files)
+  end
+
 end
