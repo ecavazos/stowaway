@@ -14,10 +14,9 @@ module Stowaway
     include FSHelpyHelp
     include Output
 
-    def initialize(matcher = Matcher.new, ext_to_ignore = [])
+    def initialize(matcher = Matcher.new)
       @matcher = matcher
-      @ignore = ext_to_ignore
-      @ignore << /^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i
+      @ignore = [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
     end
 
     def sweep(path, files)

@@ -10,10 +10,14 @@ describe Stowaway::Sweeper do
     def print str;end
   end
 
-  let(:sweeper) { Stowaway::Sweeper.new(Stowaway::Matcher.new, @ignore) }
+  let(:sweeper) { Stowaway::Sweeper.new(Stowaway::Matcher.new) }
 
   before(:each) do
-    @ignore = [/^\.|\.rb$/]
+    ignore(/^\.|\.rb$/)
+  end
+
+  def ignore(pattern)
+    sweeper.instance_eval { @ignore << pattern }
   end
   
   it "should remove files when a reference to the file is found in source" do
@@ -29,20 +33,20 @@ describe Stowaway::Sweeper do
   end
 
   it "should not sweep through ignored file types" do
-    @ignore << /\.txt$/
+    ignore(/\.txt$/)
     files = [Stowaway::FileObj.new("/fake/path1/button.jpg")]
     sweeper.sweep("spec/data", files)
     files.length.should == 1
   end
   
   it "should print the path to the file (relative to root) being swept through" do 
-    @ignore << /testfile2/
+    ignore(/testfile2/)
     sweeper.should_receive(:clr_print).once.with("  => /testfile1.txt")
     sweeper.sweep("spec/data", [])
   end
 
   it "should flush the output after sweeping through a file" do 
-    @ignore << /testfile2/
+    ignore(/testfile2/)
     sweeper.should_receive(:flush).once
     sweeper.sweep("spec/data", [])
   end
