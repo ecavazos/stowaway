@@ -1,6 +1,7 @@
-require_relative 'options'
-require_relative 'locator'
-require_relative 'sweeper'
+require_relative "options"
+require_relative "locator"
+require_relative "sweeper"
+require_relative "target_context"
 
 module Stowaway
   class Runner
@@ -11,15 +12,17 @@ module Stowaway
       @sweeper = sweeper
     end
     
+    #TODO: clean-up all the print and puts methods and use
+    # TargetContext in locator
     def run
-      path = @options.path
+      context = TargetContext.new(@options.path)
       print "\nLocating files ... "
-      assets = @locator.find_all(path)
+      assets = @locator.find_all(context.root)
       print "#{assets.length} files located"
       blank_lines
-      Dir.chdir(@options.path)
+      Dir.chdir(context.root)
       puts "sweeping: #{Dir.pwd}"
-      respond @sweeper.sweep(path, assets)
+      respond @sweeper.sweep(context, assets)
     end
     
     private

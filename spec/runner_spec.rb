@@ -7,6 +7,12 @@ class Stowaway::Status
   def flush; end
 end
 
+class Stowaway::Runner
+  def print str;end
+  def puts str;end
+end
+
+
 describe Stowaway::Runner do
 
   before(:each) do

@@ -19,18 +19,18 @@ module Stowaway
       @ignore = [/^\.|\.jpg$|\.jpeg$|\.gif$|\.png$|\.ico$|\.bmp$/i]
     end
 
-    def sweep(path, files)
-      @root = path
+    def sweep(target_context, files)
+      @context = target_context
       @result = OpenStruct.new({ :files => files, :name_only_matches => []})
-      ignore_special_directories(@root)
-      recursively(path) { |fp| inspect_file(fp) }
+      ignore_special_directories(@context.root)
+      recursively(@context.root) { |fp| inspect_file(fp) }
       @result
     end
 
     private
 
     def inspect_file(file_p)
-      clr_print("  => #{path_relative_to_root(file_p)}")
+      clr_print("  => #{@context.path_relative_to_root(file_p)}")
       File.open(file_p, "r") do |i|
         while line = i.gets
           next unless line.valid_encoding?
@@ -38,11 +38,6 @@ module Stowaway
         end
       end
       flush
-    end
-
-    def path_relative_to_root(file_p)
-      root = @root.split("/").last
-      file_p.sub(/^.+\/(#{root})/, "")
     end
 
     def remove_match(line)
