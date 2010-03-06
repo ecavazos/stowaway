@@ -1,17 +1,6 @@
 require "spec/spec_helper"
 require "lib/stowaway/runner"
 
-class Stowaway::Status
-  def out(msg); end
-  def flush; end
-end
-
-class Stowaway::Runner
-  def print str;end
-  def puts str;end
-end
-
-
 describe Stowaway::Runner do
 
   before(:each) do
@@ -23,6 +12,7 @@ describe Stowaway::Runner do
   def runner
     sweeper = Stowaway::Sweeper.new
     @runner ||= Stowaway::Runner.new(@options, @locator, sweeper)
+    @runner.extend Silencer
   end
 
   describe "output" do

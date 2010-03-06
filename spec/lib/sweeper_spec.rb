@@ -7,15 +7,12 @@ require "spec/lib/io_mock.rb"
 
 describe Stowaway::Sweeper do
 
-  Stowaway::Output.class_eval do
-    def print str;end
-  end
-
   let(:sweeper) { Stowaway::Sweeper.new(Stowaway::Matcher.new) }
   let(:context) { Stowaway::TargetContext.new("spec/data") }
 
   before(:each) do
     ignore(/^\.|\.rb$/)
+    sweeper.extend Silencer
   end
 
   def ignore(pattern)
