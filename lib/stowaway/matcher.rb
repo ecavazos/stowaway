@@ -1,4 +1,4 @@
-require_relative "File"
+require_relative "file_marker"
 
 module Stowaway
   class Matcher

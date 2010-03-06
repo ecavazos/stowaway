@@ -1,8 +1,7 @@
-require 'spec/spec_helper'
-require 'lib/stowaway/runner'
+require "spec/spec_helper"
+require "lib/stowaway/runner"
 
 class Stowaway::Status
-  # mock so I don't look at noise
   def out(msg); end
   def flush; end
 end
@@ -53,7 +52,7 @@ describe Stowaway::Runner do
   end
 
   it "should locate all assets" do
-    @locator.should_receive(:find_all).with(".").and_return([])
+    @locator.should_receive(:find_all).and_return([])
     runner.run
   end
 end

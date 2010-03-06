@@ -1,7 +1,7 @@
 require_relative "fshelpyhelp"
 require_relative "output"
 require_relative "matcher"
-require_relative "file"
+require_relative "file_marker"
 require "ostruct"
 
 module Stowaway

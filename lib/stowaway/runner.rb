@@ -5,26 +5,25 @@ require_relative "target_context"
 
 module Stowaway
   class Runner
-    
+
     def initialize(options, locator, sweeper)
       @options = options
       @locator = locator
       @sweeper = sweeper
     end
-    
+
     #TODO: clean-up all the print and puts methods and use
-    # TargetContext in locator
     def run
       context = TargetContext.new(@options.path)
       print "\nLocating files ... "
-      assets = @locator.find_all(context.root)
+      assets = @locator.find_all(context)
       print "#{assets.length} files located"
       blank_lines
       Dir.chdir(context.root)
       puts "sweeping: #{Dir.pwd}"
       respond @sweeper.sweep(context, assets)
     end
-    
+
     private
 
     def respond(result)
@@ -40,10 +39,10 @@ module Stowaway
         blank_lines
         return
       end
-      
+
       damage(result)
     end
-    
+
     def damage(result)
       files = result.files
       name_only_matches = result.name_only_matches

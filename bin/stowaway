@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'lib/stowaway/runner' 
+require "lib/stowaway/runner"
 
 options = Stowaway::Options.new(ARGV)
 locator = Stowaway::Locator.new(options.file_types)
 sweeper = Stowaway::Sweeper.new
-runner  = Stowaway::Runner.new(options, locator, sweeper) 
+runner  = Stowaway::Runner.new(options, locator, sweeper)
 runner.run

@@ -1,10 +1,9 @@
-require 'spec/spec_helper'
-require 'lib/stowaway/file'
+require "spec/spec_helper"
+require "lib/stowaway/file_marker"
 
-describe Stowaway::FileObj do
-  
+describe Stowaway::FileMarker do
   before(:all) do
-    @file = Stowaway::FileObj.new('/fake/path/test.rb')
+    @file = Stowaway::FileMarker.new('/fake/path/test.rb')
   end
   
   it "should return full path" do
@@ -19,11 +18,11 @@ describe Stowaway::FileObj do
     @file.path.should == '/fake/path'
   end
   
-  it "should be == if paths are the same" do
-    @file.should == Stowaway::FileObj.new('/fake/path/test.rb')
+  it "should be equal if paths are the same" do
+    @file.should == Stowaway::FileMarker.new('/fake/path/test.rb')
   end
   
-  it "should not be == if paths are differet" do
-    @file.should_not == Stowaway::FileObj.new('/blah/test.rb')
+  it "should not be equal if paths are different" do
+    @file.should_not == Stowaway::FileMarker.new('/blah/test.rb')
   end
 end
