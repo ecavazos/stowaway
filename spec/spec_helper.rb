@@ -1,6 +1,6 @@
-require 'spec'
-require 'spec/autorun'
-require 'spec/interop/test'
+require "spec"
+require "spec/autorun"
+require "spec/interop/test"
 
 module Silencer
   def print str;end
