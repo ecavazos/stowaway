@@ -1,5 +1,5 @@
-require_relative "fshelpyhelp"
-require_relative "file_marker"
+require "stowaway/fshelpyhelp"
+require "stowaway/file_marker"
 
 module Stowaway
   class Locator

@@ -1,8 +1,8 @@
-require_relative "fshelpyhelp"
-require_relative "output"
-require_relative "matcher"
-require_relative "file_marker"
 require "ostruct"
+require "stowaway/fshelpyhelp"
+require "stowaway/output"
+require "stowaway/matcher"
+require "stowaway/file_marker"
 
 module Stowaway
 

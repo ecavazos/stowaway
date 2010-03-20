@@ -1,7 +1,7 @@
-require_relative "options"
-require_relative "locator"
-require_relative "sweeper"
-require_relative "target_context"
+require "stowaway/options"
+require "stowaway/locator"
+require "stowaway/sweeper"
+require "stowaway/target_context"
 
 module Stowaway
   class Runner

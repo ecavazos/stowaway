@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require "lib/stowaway/runner"
+$LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
+require "stowaway/runner"
 
 options = Stowaway::Options.new(ARGV)
 locator = Stowaway::Locator.new(options.file_types)
